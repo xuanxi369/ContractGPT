@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能合同解析系统 · ContractGPT</title>
+  <link rel="stylesheet" href="./CSS/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>智能合同解析系统 · ContractGPT</h1>
+  </header>
+
+  <main>
+    <section id="upload-section">
+      <h2 data-icon="📄">合同文件上传</h2>
+      <div id="drag-drop-zone">
+        <input type="file" id="file-input" accept=".txt,.pdf,.docx" />
+        <p>点击上传合同文件（支持 .txt, .pdf, .docx）<br />或拖拽文件到此处</p>
+      </div>
+      <div class="hint" style="color: black;">
+        为确保合同解析结果准确，请注意以下事项：<br />
+        · 建议上传 .txt、.pdf 或 .docx 正式合同文本，避免截图或扫描图像格式；<br />
+        · 支持多页合同，系统将按页面顺序自动识别，无需手动拆分整理；<br />
+        · 上传前请检查文件是否完整清晰，避免乱码、缺页或水印遮挡；<br />
+        · 上传后系统将自动启用语言模型，提取关键信息并生成条款摘要；<br />
+        · 所有文档仅用于本地临时分析，处理完毕后将即时清除，确保数据安全。
+      </div>
+    </section>
+
+    <section id="preview-section">
+      <h2 data-icon="📝">合同原文预览</h2>
+      <div id="contract-text">
+        尚未上传合同<br />
+        上传后此处将显示完整合同内容，系统将自动解析文档结构，按条款段落顺序清晰呈现，支持用户对关键内容进行定位、审阅与比对操作。<br />
+        -----------------------------------------<br />
+        示例：合同条款将按段落显示，支持纵向滚动阅读，页面编号与原始排版将同步保留，便于与原文核对。<br />
+        请务必逐页查阅，尤其注意末页附加条款、补充协议、争议处理方式等内容，避免因遗漏关键条款而影响签署决策或后续维权。
+      </div>
+      <button id="toggle-preview">展开</button>
+    </section>
+
+    <section id="risk-section">
+      <h2 data-icon="⚠️">风险提示</h2>
+      <div id="risk-cards">
+        <div class="risk-default">
+          上传后将显示潜在风险条款<br />
+          如试用期、赔偿或竞业限制等。<br />
+          系统将自动分析合同文本中的关键性法律条款，重点识别可能涉及单方面义务、不合理限制、或法律冲突的内容，辅助您进行全面风险预判。<br />
+          --------------------------------<br />
+          示例：检测到“试用期”条款中可能存在不合理约定，例如约定超过六个月或设定单方解除权，请您仔细审查该条款内容。<br />
+          建议您在签署前，结合自身实际情况，咨询持证律师或劳动法律师，以获得针对性的法律建议，避免因合同陷阱导致权益受损或履约纠纷。
+        </div>
+      </div>
+    </section>
+
+    <section id="chat-section">
+      <h2 data-icon="💬">AI 合同对话</h2>
+      <div id="chat-log"></div>
+      <!-- <button id="toggle-chat-log">展开</button> -->
+      <div class="chat-controls">
+        <input type="text" id="chat-input" placeholder="输入您的问题后请稍作等待..." style="height: 73px;" />
+        <button id="send-chat">发送</button>
+      </div>
+      <div class="hint" style="color: black;">
+        示例问题：解释某条款、评估风险点、咨询法律建议方向。<br />
+        您可以提出如“违约责任是否对等？”、“竞业限制条款是否合法？”等问题，系统将基于合同上下文进行语义解析与专业应答。<br />
+        AI 将结合已上传合同内容，提供结构化分析与智能辅助判断，涵盖常见风险标识、条款逻辑评估、法律适配性判断等维度。<br />
+        部分复杂或高度定制化内容建议结合专业律师意见进一步核查，以确保法律效力和实际履行的可行性。<br />
+        请耐心等待响应，避免重复提交提问，以确保系统稳定运行并提升解答准确性。
+      </div>
+    </section>
+
+    <section id="status-section">
+      <p id="status-area">状态：等待上传合同</p>
+      <p class="hint">
+        上传文件后状态将实时更新。<br /><span id="current-time"></span><br />如遇问题，请稍后重试。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <h5> 
+    <p>
+      2025@ContractGPT&杨烜曦 | 联系方式：millychck@gmail.com<br />
+      免责声明：本工具仅供参考，不构成法律建议。
+    </p>
+    </h5>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+  <script src="./JS/script.js"></script>
+</body>
+</html>
