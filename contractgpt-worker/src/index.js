@@ -1,18 +1,30 @@
 export default {
   async fetch(request, env, ctx) {
-    try {
-      if (request.method !== "POST") {
-        return new Response("仅支持 POST 请求", {
-          status: 405,
-          headers: {
-            "Content-Type": "text/plain",
-            "Access-Control-Allow-Origin": "*"
-          }
-        });
-      }
 
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        }
+      });
+    }
+
+    if (request.method !== "POST") {
+      return new Response("仅支持 POST 请求", {
+        status: 405,
+        headers: {
+          "Content-Type": "text/plain",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+
+    try {
       const { question, contract } = await request.json();
-      // 我采用的是 Deepseek 大模型的 API令牌
+     // 我调用的是 DeepSeek 的API令牌
       const response = await fetch("https://api.deepseek.com/chat/completions", {
         method: "POST",
         headers: {
@@ -24,7 +36,7 @@ export default {
           messages: [
             {
               role: "system",
-              content: "你是一位资深合同审查法律顾问，擅长分析中国劳动合同中对雇员不利的内容，并提出风险建议。" // 我对此AI的身份设定
+              content: "你是一位资深合同审查法律顾问，擅长分析中国劳动合同中对雇员不利的内容，并提出风险建议。"  // 我将AI的身份进行了设定
             },
             {
               role: "user",
@@ -40,7 +52,14 @@ export default {
       });
 
       const result = await response.json();
-      const message = result?.choices?.[0]?.message?.content || "分析失败，请稍后重试。";  
+      return new Response(JSON.stringify(result, null, 2), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+      
 
       return new Response(JSON.stringify({ answer: message }), {
         status: 200,
