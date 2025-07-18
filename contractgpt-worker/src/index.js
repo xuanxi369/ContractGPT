@@ -12,7 +12,7 @@ export default {
       }
 
       const { question, contract } = await request.json();
-
+      // 我采用的是 Deepseek 大模型的 API令牌
       const response = await fetch("https://api.deepseek.com/chat/completions", {
         method: "POST",
         headers: {
@@ -24,7 +24,7 @@ export default {
           messages: [
             {
               role: "system",
-              content: "你是一位资深合同审查法律顾问，擅长分析中国劳动合同中对雇员不利的内容，并提出风险建议。"
+              content: "你是一位资深合同审查法律顾问，擅长分析中国劳动合同中对雇员不利的内容，并提出风险建议。" // 我对此AI的身份设定
             },
             {
               role: "user",
@@ -40,7 +40,7 @@ export default {
       });
 
       const result = await response.json();
-      const message = result?.choices?.[0]?.message?.content || "分析失败，请稍后重试。";
+      const message = result?.choices?.[0]?.message?.content || "分析失败，请稍后重试。";  
 
       return new Response(JSON.stringify({ answer: message }), {
         status: 200,
