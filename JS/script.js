@@ -11,7 +11,7 @@ const togglePreviewBtn = document.getElementById("toggle-preview");
 const toggleChatLogBtn = document.getElementById("toggle-chat-log");
 
 // === Worker API 地址 ===
-const WORKER_API_URL = "https://your-worker-name.your-subdomain.workers.dev/analyze"; // ← 修改为你的Worker URL
+const WORKER_API_URL = "https://contractgpt-worker.millychck-033.workers.dev/"; // ← 修改为你的Worker URL
 
 let fullContractText = "";
 let aiAnalysisData = null; // 保存AI返回的数据
